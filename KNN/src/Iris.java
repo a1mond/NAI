@@ -12,6 +12,14 @@ public class Iris {
         this.name = name;
     }
 
+    public Iris(double x1, double x2, double x3, double x4) {
+        this.x1 = x1;
+        this.x2 = x2;
+        this.x3 = x3;
+        this.x4 = x4;
+        this.name = null;
+    }
+
     public Iris(Iris i, String name) {
         this.x1 = i.x1;
         this.x2 = i.x2;
