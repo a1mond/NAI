@@ -29,8 +29,8 @@ public class Main extends Application {
             classifier.assignOutputSet();
             HashSet<Iris> output_set = classifier.getOutputSet();
             stage.setTitle("KNN Implementation");
-            final NumberAxis xAxis = new NumberAxis(2, 4, 0.2);
-            final NumberAxis yAxis = new NumberAxis(0, 3, 0.2);
+            final NumberAxis xAxis = new NumberAxis(2, 4, 0.5);
+            final NumberAxis yAxis = new NumberAxis(0, 3, 0.5);
             final ScatterChart<Number, Number> sc = new ScatterChart<>(xAxis, yAxis);
             xAxis.setLabel("Sepal Width");
             yAxis.setLabel("Petal Width");
@@ -88,7 +88,7 @@ public class Main extends Application {
             stage.show();
         } else if (arguments[3].equals("kplot")) {
             stage.setTitle("KNN Implementation");
-            final NumberAxis xAxis = new NumberAxis(1, 100, 5);
+            final NumberAxis xAxis = new NumberAxis(0, 100, 5);
             final NumberAxis yAxis = new NumberAxis(0, 100, 10);
             final LineChart<Number, Number> lc = new LineChart<>(xAxis, yAxis);
             xAxis.setLabel("K-value");
