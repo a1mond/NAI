@@ -33,10 +33,9 @@ public class Classifier {
         output_set = new HashSet<>();
     }
     public void assignOutputSet() {
-        for (Iris i : test_set) {
-            Iris iris = classify(i);
-            output_set.add(iris);
-        }
+        output_set.clear();
+        for (Iris i : test_set)
+            output_set.add(classify(i));
     }
 
     public Iris classify(Iris iris) {
@@ -72,8 +71,8 @@ public class Classifier {
     }
     public int calc_mistake() {
         double correct = 0;
-        for (Iris i : test_set) {
-            if (output_set.contains(i)) correct++;
+        for (Iris test_i : test_set) {
+            if (output_set.contains(test_i)) correct++;
         }
         return (int) Math.round((correct / test_set.size()) * 100);
     }

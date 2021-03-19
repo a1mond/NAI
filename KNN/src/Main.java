@@ -81,11 +81,14 @@ public class Main extends Application {
 
             ((Group) scene.getRoot()).getChildren().add(vBox);
 
+
+            System.out.println(classifier.calc_mistake());
+
             stage.setScene(scene);
             stage.show();
         } else if (arguments[3].equals("kplot")) {
             stage.setTitle("KNN Implementation");
-            final NumberAxis xAxis = new NumberAxis(1, 100, 1);
+            final NumberAxis xAxis = new NumberAxis(1, 100, 5);
             final NumberAxis yAxis = new NumberAxis(0, 100, 10);
             final LineChart<Number, Number> lc = new LineChart<>(xAxis, yAxis);
             xAxis.setLabel("K-value");
@@ -100,10 +103,8 @@ public class Main extends Application {
                 series.getData().add(new XYChart.Data<>(i, classifier.calc_mistake()));
             }
 
-
-            Scene scene = new Scene(lc, 500, 500);
+            Scene scene = new Scene(lc, 1500, 700);
             lc.getData().add(series);
-
             stage.setScene(scene);
             stage.show();
         }
