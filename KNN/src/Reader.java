@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Reader {
     public static HashSet<Iris> read(File file) {
@@ -13,13 +15,11 @@ public class Reader {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lines = line.split(",");
-                set.add(new Iris(
-                        Double.parseDouble(lines[0]),
-                        Double.parseDouble(lines[1]),
-                        Double.parseDouble(lines[2]),
-                        Double.parseDouble(lines[3]),
-                        lines[4]
-                ));
+                List<Double> coords = new LinkedList<>();
+                for (int i = 0; i < lines.length - 1; i++) {
+                    coords.add(Double.parseDouble(lines[i]));
+                    set.add(new Iris(coords, lines[lines.length - 1]));
+                }
             }
             fr.close();
         } catch (IOException e) {

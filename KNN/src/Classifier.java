@@ -1,12 +1,9 @@
 import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Classifier {
     private int k;
-    private final String METHOD;
     private final HashSet<Iris> train_set;
     private final HashSet<Iris> test_set;
     private final HashSet<Iris> output_set;
@@ -14,18 +11,16 @@ public class Classifier {
     public Classifier(String[] args) throws Exception {
         File train_file;
         File test_file;
-        if (args.length > 3) {
+        if (args.length == 2) {
             k = 5;
-            METHOD = args[0];
-            train_file = new File(args[1]);
-            test_file = new File(args[2]);
+            train_file = new File(args[0]);
+            test_file = new File(args[1]);
         } else {
             throw new Exception("""
-                    Number of arguments should be exactly 4 where
-                    1) Euclidean or Manhattan ('eu' or 'mh')
+                    Number of arguments should be exactly 3 where
                     2) Path to training data
                     3) Path to test data
-                    4) Type of GUI (kplot, splot)""");
+                    4) Type of GUI (kplot, console)""");
         }
 
         train_set = Reader.read(train_file);
@@ -39,35 +34,23 @@ public class Classifier {
     }
 
     public Iris classify(Iris iris) {
-        // Assigning new map, where key is value of distance to given iris,
-        // and second value of iris ot which it was calculated
         HashMap<Iris, Double> map = new HashMap<>();
-        int num_s = 0, num_v = 0, num_vg = 0;
 
-        // Calculating those distances
-        if (METHOD.equals("eu")) {
-            for (Iris i : train_set)
-                map.put(i, eu_distance(i, iris));
-        } else {
-            for (Iris i : train_set)
-                map.put(i, mh_distance(i, iris));
+        for (Iris i : train_set) {
+            double distance = eu_distance(i, iris);
+            if (distance != -1) map.put(i, eu_distance(i, iris));
         }
-        // Finding irises which are the most close to given iris
+
         HashMap<Iris, Double> min_map = find_mins(map);
+        if (min_map.isEmpty()) {
+            System.out.println("Cannot classify " + iris + ", no elements matching this in train set");
+            return new Iris(iris, "Unclassifiable");
+        } else {
+            HashMap<String, Long> counts = new HashMap<>(min_map.keySet().stream().collect(Collectors.groupingBy(Iris::getName, Collectors.counting())));
 
-        // Based on those minimums, find names to which this is most closely placed
-        for (Map.Entry<Iris, Double> pair : min_map.entrySet()) {
-            switch (pair.getKey().getName()) {
-                case "Iris-setosa" -> num_s++;
-                case "Iris-versicolor" -> num_v++;
-                case "Iris-virginica" -> num_vg++;
-            }
+            Map.Entry<String, Long> max = Collections.max(counts.entrySet(), Map.Entry.comparingByValue());
+            return new Iris(iris, max.getKey());
         }
-        // Find maximum
-        int max = Math.max(Math.max(num_s, num_v), num_vg);
-        if (max == num_s) return new Iris(iris, "Iris-setosa");
-        else if (max == num_v) return new Iris(iris, "Iris-versicolor");
-        else return new Iris(iris, "Iris-virginica");
     }
     public int calc_mistake() {
         double correct = 0;
@@ -79,10 +62,11 @@ public class Classifier {
     private HashMap<Iris, Double> find_mins(HashMap<Iris, Double> entry_map) {
         HashMap<Iris, Double> new_map = new HashMap<>();
         for (int i = 0; i < k; i++) {
+            if (entry_map.isEmpty()) return new_map;
             Double min = Collections.min(entry_map.values());
             Iris iris = null;
             for (Map.Entry<Iris, Double> entry : entry_map.entrySet()) {
-                if (entry.getValue().equals(min)) {
+                if (entry.getValue().equals(min) && min != -1) {
                     iris = entry.getKey();
                 }
             }
@@ -92,20 +76,14 @@ public class Classifier {
         return new_map;
     }
     private double eu_distance(Iris i1, Iris i2) {
-        return Math.sqrt(
-                Math.pow(i1.getX1() - i2.getX1(), 2) +
-                Math.pow(i1.getX2() - i2.getX2(), 2) +
-                Math.pow(i1.getX3() - i2.getX3(), 2) +
-                Math.pow(i1.getX4() - i2.getX4(), 2)
-        );
-    }
-    private double mh_distance(Iris i1, Iris i2) {
-        return (
-                Math.abs(i1.getX1() - i2.getX1()) +
-                Math.abs(i1.getX2() - i2.getX2()) +
-                Math.abs(i1.getX3() - i2.getX3()) +
-                Math.abs(i1.getX4() - i2.getX4())
-                );
+        if (i1.getCoords().size() != i2.getCoords().size()) return -1;
+        double sum = 0;
+        Iterator<Double> it1 = i1.getCoords().iterator();
+        Iterator<Double> it2 = i2.getCoords().iterator();
+        while (it1.hasNext() && it2.hasNext()) {
+            sum += Math.pow(it1.next() - it2.next(), 2);
+        }
+        return Math.sqrt(sum);
     }
 
     public HashSet<Iris> getOutputSet() {
