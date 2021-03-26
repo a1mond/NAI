@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/KNN/KNN.iml" filepath="$PROJECT_DIR$/KNN/KNN.iml" />
       <module fileurl="file://$PROJECT_DIR$/NAI.iml" filepath="$PROJECT_DIR$/NAI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NAI1-KNN/NAI1-KNN.iml" filepath="$PROJECT_DIR$/NAI1-KNN/NAI1-KNN.iml" />
     </modules>
   </component>
 </project>
