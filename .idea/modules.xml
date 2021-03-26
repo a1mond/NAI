@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NAI.iml" filepath="$PROJECT_DIR$/NAI.iml" />
       <module fileurl="file://$PROJECT_DIR$/NAI1-KNN/NAI1-KNN.iml" filepath="$PROJECT_DIR$/NAI1-KNN/NAI1-KNN.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NAI2-PERCEPTRON/NAI2-PERCEPTRON.iml" filepath="$PROJECT_DIR$/NAI2-PERCEPTRON/NAI2-PERCEPTRON.iml" />
     </modules>
   </component>
 </project>
