@@ -102,18 +102,18 @@ def train_model(train_array, max_iter=100, learning_rate=0.1, max_error=0, theta
     return weights
 
 
-def test_model(weights, train_set, theta):
+def test_model(weights, test_set, theta):
     acc = 0
 
-    for x in train_set:
-        output = calc_output(theta, x, weights, train_set)
+    for x in test_set:
+        output = calc_output(theta, x, weights, test_set)
 
         if output == x[-1]:
             acc += 1
             print(f"BANG {x} = {output}")
         else:
             print(f"    DAMN {x} = {output}")
-    return int((acc / len(train_set)) * 100)
+    return int((acc / len(test_set)) * 100)
 
 
 if __name__ == '__main__':
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
     test_data = get_data('perceptron.test.data')
     test_data = encode_test_data(test_data, c1, c2)
-    accuracy = test_model(model, train_data, threshold)
+    accuracy = test_model(model, test_data, threshold)
 
     print(f'\nAccuracy is {accuracy}%')
     print('Type in your vector for classification in form "x1,x2,etc"')
