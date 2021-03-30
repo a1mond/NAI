@@ -132,10 +132,14 @@ if __name__ == '__main__':
     print(f'\nAccuracy is {accuracy}%')
     print('Type in your vector for classification in form "x1,x2,etc"')
     print(f'No more or less than {get_num_of_features(train_data)} features')
-    vector = input()
-    vector = vector.split(',')
-    vector = encode_features(vector, has_output=False)
+    while True:
+        vector = input()
+        if vector == 'quit':
+            print('quitting')
+            break
+        vector = vector.split(',')
+        vector = encode_features(vector, has_output=False)
 
-    v_calc = calc_output(threshold, vector, model, train_data)
-    v_cat = c1.name if v_calc == c1.num else c2.name
-    print(f'Your vector was classified as {v_cat}')
+        v_calc = calc_output(threshold, vector, model, train_data)
+        v_cat = c1.name if v_calc == c1.num else c2.name
+        print(f'Your vector was classified as {v_cat}')
