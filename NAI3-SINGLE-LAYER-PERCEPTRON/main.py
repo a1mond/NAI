@@ -50,71 +50,8 @@ def get_data(path):
     return dataset
 
 
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-
-def sigma(d, y):
-    return (d - y) * y * (1 - y)
-
-
-def predict(x, w):
-    return sigmoid(x.dot(w))
-
-
-def init_weights():
-    return np.random.rand(INPUTS_NUM, CLASS_NUM)
-
-
-def train(x_matrix, theta=np.ones((CLASS_NUM, 1)), learning_rate=0.2, epochs=1000):
-    w = init_weights()
-    for i in range(epochs):
-        for item in x_matrix:
-            for x in item:
-                _x = np.array(x[:-CLASS_NUM])
-                d = np.array(x[-CLASS_NUM:])
-
-                net = np.array(np.matrix(np.dot(w.T, _x)).T - theta).flatten()
-
-                y = sigmoid(net)
-                sig = np.matrix(sigma(d, y)).T
-
-                w = w.T + learning_rate * np.outer(sig, _x)
-                w = w.T
-
-                theta = theta - learning_rate * sig
-    return w, theta
-
-
-def get_key(value):
-    for key, val in CATEGORIES.items():  # for name, age in dictionary.iteritems():  (for Python 2.x)
-        if (val == value).all():
-            return key
-
-    return -1
-
-
-def classify(arr):
-    return get_key(normalize_sigmoid(arr))
-
-
-def normalize_sigmoid(arr):
-    new_arr = np.zeros(3)
-    index = np.where(arr == np.amax(arr))[0][0]
-    new_arr[index] = 1
-    return new_arr
-
-
-def test(x_matrix, w, theta):
-    for item in x_matrix:
-        for x in item:
-            _x = np.array(x[:-CLASS_NUM])
-            net = np.array(np.matrix(np.dot(w.T, _x)).T - theta).flatten()
-            y = sigmoid(net)
-            classified = classify(y)
-            print(f'{x[-CLASS_NUM:]} --- {normalize_sigmoid(y)} --- {classified}')
-
-
 if __name__ == "__main__":
-    w_trained, theta_trained = train(get_data('dataset/train'))
-    test(get_data('dataset/test'), w_trained, theta_trained)
+    from SingleLayerPerceptron import SingleLayerPerceptron
+    classifier = SingleLayerPerceptron(CLASS_NUM, INPUTS_NUM, CATEGORIES)
+    classifier.fit(get_data('dataset/train'))
+    classifier.predict(get_data('dataset/test'))
