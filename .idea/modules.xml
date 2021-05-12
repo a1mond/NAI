@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/NAI1-KNN/NAI1-KNN.iml" filepath="$PROJECT_DIR$/NAI1-KNN/NAI1-KNN.iml" />
       <module fileurl="file://$PROJECT_DIR$/NAI2-PERCEPTRON/NAI2-PERCEPTRON.iml" filepath="$PROJECT_DIR$/NAI2-PERCEPTRON/NAI2-PERCEPTRON.iml" />
       <module fileurl="file://$PROJECT_DIR$/NAI3-SINGLE-LAYER-PERCEPTRON/NAI3-SINGLE-LAYER-PERCEPTRON.iml" filepath="$PROJECT_DIR$/NAI3-SINGLE-LAYER-PERCEPTRON/NAI3-SINGLE-LAYER-PERCEPTRON.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NAI4-NAIVE-BAYES/NAI4-NAIVE-BAYES.iml" filepath="$PROJECT_DIR$/NAI4-NAIVE-BAYES/NAI4-NAIVE-BAYES.iml" />
     </modules>
   </component>
 </project>

@@ -26,7 +26,7 @@ class SingleLayerPerceptron:
         self.theta = None
 
     def get_key(self, value):
-        for key, val in self.categories.items():  # for name, age in dictionary.iteritems():  (for Python 2.x)
+        for key, val in self.categories.items():
             if (val == value).all():
                 return key
         return -1
