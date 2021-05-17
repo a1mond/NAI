@@ -13,6 +13,7 @@
         <list>
           <option value="bool.any" />
           <option value="bool.all" />
+          <option value="float.coords" />
         </list>
       </option>
     </inspection_tool>
