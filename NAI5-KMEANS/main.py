@@ -81,8 +81,9 @@ class KMeansClassifier:
     def print_points_to_centroid(self):
         centroid = 1
         for x in self.centroids:
-            print(f'\nCentroid {centroid}: \n')
-            print(f'{np.matrix([x.coords for x in x.points])}')
+            mat = np.matrix([x.coords for x in x.points])
+            print(f'\nCentroid {centroid}, length: {len(mat[:])}: \n')
+            print(f'{mat}')
             centroid += 1
 
     def fit(self, X):
