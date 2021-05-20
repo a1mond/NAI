@@ -127,5 +127,5 @@ if __name__ == '__main__':
                 [x.coords[3] for x in model.centroids[1].points], s=100, c='green')
     plt.scatter([x.coords[2] for x in model.centroids[2].points],
                 [x.coords[3] for x in model.centroids[2].points], s=100, c='brown')
-    plt.scatter([x.coords[2] for x in model.centroids], [x.coords[3] for x in model.centroids], s=200, c='red')
+    plt.scatter([x.coords[2] for x in model.centroids], [x.coords[3] for x in model.centroids], s=300, c='yellow')
     plt.show()
